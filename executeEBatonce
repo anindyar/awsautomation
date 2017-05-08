@@ -1,0 +1,9 @@
+LiveNodes="$(echo `sudo eb health --view status | grep -a "total" -A 1 | awk -F ' ' '{print $1}' | sed -n '/total/{n;p;}'`)"
+echo Number of Live Nodes - $LiveNodes
+count=1 
+echo $*
+while [ $count -le $LiveNodes ] 
+do
+sudo eb ssh -n $count --command "$*"
+(( count++ ))
+done
